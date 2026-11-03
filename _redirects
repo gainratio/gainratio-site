@@ -1,0 +1,5 @@
+# The public OSS front door has its own canonical site; never serve the
+# advisory homepage at this path.
+/open-source https://open-source.gainratio.com/ 301
+/open-source/ https://open-source.gainratio.com/ 301
+/open-source/* https://open-source.gainratio.com/:splat 301

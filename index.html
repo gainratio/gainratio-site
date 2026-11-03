@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="theme-color" content="#1F3864">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GainRatio — Independent AI Platform Advisory</title>
+<meta name="description" content="Independent AI platform architecture for enterprises: turn fragmented GenAI pilots into a governed production platform you own. Fixed scope.">
+<link rel="canonical" href="https://gainratio.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="GainRatio — Independent AI Platform Advisory">
+<meta property="og:description" content="From AI experiments to production platforms. Architecture → reference implementation → golden path, then transfer to your engineers.">
+<meta property="og:url" content="https://gainratio.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GainRatio — Independent AI Platform Advisory">
+<meta name="twitter:description" content="From AI experiments to production platforms. Architecture → reference implementation → golden path, then transfer to your engineers.">
+<meta name="twitter:image" content="https://gainratio.com/og-image.png">
+<meta property="og:image" content="https://gainratio.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%20width%3D%22100%22%20height%3D%22100%22%20role%3D%22img%22%20aria-label%3D%22GainRatio%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2214%22%20fill%3D%22%231F3864%22%2F%3E%3Cpath%20d%3D%22M%2076.6%2027.4%20A%2034.5%2034.5%200%201%200%2084.5%2050%20L%2058%2050%22%20fill%3D%22none%22%20stroke%3D%22%23FFFFFF%22%20stroke-width%3D%228.5%22%2F%3E%3C%2Fsvg%3E">
+<link rel="icon" type="image/png" sizes="32x32" href="/gainratio-mark-32.png">
+<link rel="apple-touch-icon" href="/gainratio-mark-180.png">
+<style>
+  :root{
+    --navy:#1F3864; --navy-deep:#152744; --ink:#1A1A1A; --slate:#4A4A4A;
+    --rule:#BFC9DA; --link:#2E5496; --paper:#FFFFFF; --wash:#F6F8FB;
+    --measure:47rem;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font:400 clamp(1.02rem,0.97rem + 0.22vw,1.14rem)/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+    text-rendering:optimizeLegibility;
+  }
+  .wrap{width:min(100% - 2.5rem, var(--measure)); margin-inline:auto}
+  h1,h2,h3{font-family:Georgia,"Iowan Old Style","Times New Roman",serif; font-weight:600; letter-spacing:-0.012em; color:var(--navy); margin:0}
+  a{color:var(--link); text-underline-offset:.18em; text-decoration-thickness:.06em}
+  a:hover{color:var(--navy)}
+  p{margin:0 0 1.05rem}
+  strong{font-weight:650; color:var(--navy)}
+
+  /* ---------- masthead ---------- */
+  header{background:var(--navy-deep); color:#EEF2F8; padding:clamp(3rem,9vw,5.5rem) 0 clamp(2.6rem,7vw,4rem)}
+  .mark{
+    display:block; height:clamp(30px,2.4vw,38px); width:auto;
+    margin:0 0 clamp(1.6rem,4vw,2.4rem)
+  }
+  header h1{
+    color:#fff; font-size:clamp(1.62rem,1.15rem + 2.1vw,2.7rem); line-height:1.24; margin:0 0 1.35rem; max-width:34ch
+  }
+  .sub{color:#C9D6EA; font-size:clamp(.98rem,.95rem + .16vw,1.08rem); margin:0 0 .55rem}
+  .depth{color:#8FA4C4; font-style:italic; font-size:.94rem; margin:0}
+  .rule-thin{height:1px; background:rgba(191,201,218,.28); margin:clamp(2rem,5vw,2.8rem) 0 0}
+
+  /* ---------- calls to action ---------- */
+  .actions{display:flex; flex-wrap:wrap; gap:.7rem 1rem; margin:1.6rem 0 0}
+  .btn{
+    display:inline-block; padding:.72rem 1.35rem; border-radius:3px; text-decoration:none;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+    font-size:.94rem; font-weight:600; letter-spacing:.01em; border:1px solid transparent;
+    transition:background .15s ease, border-color .15s ease, color .15s ease
+  }
+  .btn-primary{background:#fff; color:var(--navy); border-color:#fff}
+  .btn-primary:hover{background:#DCE5F3; border-color:#DCE5F3}
+  .btn-ghost{background:transparent; color:#DCE5F3; border-color:rgba(191,201,218,.5)}
+  .btn-ghost:hover{border-color:#DCE5F3; color:#fff}
+  .close .btn-primary{background:var(--navy); color:#fff; border-color:var(--navy)}
+  .close .btn-primary:hover{background:var(--navy-deep); border-color:var(--navy-deep)}
+  .close blockquote{
+    margin:0 0 1.4rem; padding:0 0 0 1.1rem; border-left:2px solid var(--navy);
+    font-size:clamp(1.05rem,1rem + .4vw,1.28rem); line-height:1.45; color:var(--navy-deep)
+  }
+
+  /* ---------- open-source proof ---------- */
+  .oss{display:grid; gap:1.15rem; margin:0 0 1.3rem; padding:0; list-style:none}
+  @media(min-width:720px){.oss{grid-template-columns:repeat(3,1fr); gap:1.6rem}}
+  .oss li{padding:0; margin:0; border-top:2px solid var(--navy); padding-top:.8rem}
+  .oss li::before{display:none}
+  .oss h3{
+    font-size:1rem; margin:0 0 .4rem; color:var(--navy-deep);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif
+  }
+  .oss p{margin:0 0 .55rem; font-size:.94rem}
+  .oss .links{font-size:.88rem; color:var(--slate)}
+
+  .sub-h{
+    font-size:1rem; margin:1.9rem 0 .7rem; color:var(--navy-deep);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif
+  }
+  .done{margin:0; padding:0 0 0 1.1rem}
+
+  /* ---------- accessibility ---------- */
+  html{scroll-behavior:smooth}
+  section{scroll-margin-top:1.5rem}
+  a:focus-visible, .btn:focus-visible{
+    outline:3px solid #E4A93C; outline-offset:3px; border-radius:2px
+  }
+  header a:focus-visible{outline-color:#F0C874}
+  .skip{
+    position:absolute; left:-9999px; top:0; z-index:100;
+    background:#fff; color:var(--navy); padding:.7rem 1.1rem;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+    font-weight:600; text-decoration:none
+  }
+  .skip:focus{left:1rem; top:1rem}
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{transition-duration:.01ms !important; animation-duration:.01ms !important}
+  }
+
+  /* ---------- sections ---------- */
+  main{padding:clamp(2.8rem,7vw,4.2rem) 0 0}
+  section{padding-block:clamp(1.7rem,4.5vw,2.5rem)}
+  section + section{border-top:1px solid var(--rule)}
+  h2{
+    font-size:.8rem; letter-spacing:.17em; text-transform:uppercase; color:var(--slate);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+    font-weight:700; margin:0 0 1.15rem
+  }
+  .lead{font-size:clamp(1.1rem,1.03rem + .3vw,1.28rem); line-height:1.52; color:var(--navy); margin-bottom:1.2rem}
+
+  ul{margin:0 0 1.05rem; padding:0; list-style:none}
+  li{position:relative; padding-left:1.4rem; margin-bottom:.72rem}
+  li::before{
+    content:""; position:absolute; left:.28rem; top:.72em;
+    width:.36rem; height:.36rem; border-radius:50%; background:var(--rule)
+  }
+  li:last-child{margin-bottom:0}
+
+  /* ---------- offers ---------- */
+  .offer{padding:1.1rem 0; border-bottom:1px solid var(--rule)}
+  .offer:last-of-type{border-bottom:0; padding-bottom:.2rem}
+  .offer-head{display:flex; flex-wrap:wrap; align-items:baseline; gap:.45rem 1rem; margin-bottom:.4rem}
+  .offer-head h3{font-size:1.09rem; line-height:1.35; margin:0}
+  .dur{
+    font-size:.74rem; letter-spacing:.11em; text-transform:uppercase; font-weight:700;
+    color:var(--navy); background:var(--wash); border:1px solid var(--rule);
+    border-radius:100px; padding:.24rem .68rem; white-space:nowrap
+  }
+  .offer p{margin:0; color:var(--slate); font-size:.99rem}
+
+  /* ---------- pov ---------- */
+  .pov{margin-bottom:1.25rem}
+  .pov:last-child{margin-bottom:0}
+  .pov h3{font-size:1.02rem; margin:0 0 .3rem}
+  .pov p{margin:0; color:var(--slate)}
+
+  .note{
+    background:var(--wash); border-left:3px solid var(--navy);
+    padding:1.05rem 1.2rem; margin:0; color:var(--slate); font-size:.97rem
+  }
+  .note p:last-child{margin-bottom:0}
+
+  /* ---------- contact ---------- */
+  #contact{border-top:1px solid var(--rule)}
+  .contact-grid{display:flex; flex-wrap:wrap; gap:.55rem 1.5rem; margin:0; padding:0; list-style:none}
+  .contact-grid li{padding-left:0; margin:0}
+  .contact-grid li::before{display:none}
+
+  footer{
+    border-top:1px solid var(--rule); margin-top:clamp(2rem,5vw,3rem);
+    padding:1.6rem 0 3rem; color:var(--slate); font-size:.85rem
+  }
+  footer p{margin:0}
+
+  @media print{header{background:#fff;color:#000}header h1,.mark{color:#000}}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "Organization",
+        "ProfessionalService"
+      ],
+      "@id": "https://gainratio.com/#organization",
+      "name": "GainRatio",
+      "legalName": "Gain Ratio, Inc.",
+      "alternateName": "Gain Ratio",
+      "url": "https://gainratio.com/",
+      "logo": "https://gainratio.com/gainratio-mark-512.png",
+      "image": "https://gainratio.com/og-image.png",
+      "foundingDate": "2010-03-09",
+      "description": "Independent AI platform advisory. GainRatio helps enterprises move from AI experiments to production platforms without vendor lock-in, uncontrolled agents, or architecture chaos — delivering architecture, a reference implementation and a golden path their own engineers own.",
+      "slogan": "Architecture → Reference Implementation → Golden Path",
+      "email": "harish@gainratio.com",
+      "founder": {
+        "@id": "https://gainratio.com/#harish"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "CA",
+        "addressCountry": "US"
+      },
+      "knowsAbout": [
+        "Enterprise AI platform architecture",
+        "AI gateways and model routing",
+        "Agentic AI governance",
+        "AI evaluation strategy",
+        "LLM and RAG systems",
+        "Internal developer platforms",
+        "Golden paths",
+        "Deterministic execution",
+        "Multi-cloud architecture",
+        "MLOps"
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/in/harish-seshadri-2373142b/",
+        "https://github.com/gainratio"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Advisory engagements",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Platform Diagnostic",
+              "description": "Two to three weeks. Current state, irreversible decisions, target architecture and a prioritised roadmap. Fixed fee."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Architecture & Reference Implementation",
+              "description": "Six to ten weeks. The Enterprise AI Platform Architecture Sprint: target platform, interfaces and contracts, a skeletal reference implementation, one production-quality vertical slice and a golden path, transferred to the client's engineers."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Fractional Principal AI Platform Architect",
+              "description": "One to two days per week on a monthly retainer, three-month minimum. Standing design authority, decision-record sign-off, vendor selection and mentoring."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://gainratio.com/#harish",
+      "name": "Harish Seshadri",
+      "jobTitle": "Founder & Principal Architect",
+      "description": "Independent AI platform advisor with 30+ years in enterprise platforms and distributed systems. Two U.S. patents.",
+      "worksFor": {
+        "@id": "https://gainratio.com/#organization"
+      },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "University of Southern California"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/harish-seshadri-2373142b/",
+        "https://github.com/gainratio"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://gainratio.com/#website",
+      "url": "https://gainratio.com/",
+      "name": "GainRatio",
+      "publisher": {
+        "@id": "https://gainratio.com/#organization"
+      },
+      "inLanguage": "en-US"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header>
+  <div class="wrap">
+    <svg class="mark" viewBox="0 0 499.3 100" role="img" aria-label="GainRatio">
+      <g><path d="M 76.6 27.4 A 34.5 34.5 0 1 0 84.5 50 L 58 50" fill="none" stroke="#FFFFFF" stroke-width="8.5"/></g>
+  <g transform="translate(134.0 5.00) scale(0.86)">
+    <path d="M2.6 66.6Q2.6 50.0 8.950000000000001 41.199999999999996Q15.3 32.39999999999999 29.900000000000002 32.39999999999999Q34.9 32.39999999999999 39.75 33.8Q44.6 35.2 47.8 38.2Q51.0 41.199999999999996 51.0 45.599999999999994Q51.0 49.099999999999994 49.25 51.3Q47.5 53.5 45.1 53.5Q43.1 53.5 41.5 52.4Q39.900000000000006 51.3 39.300000000000004 49.599999999999994Q41.2 46.8 41.2 44.599999999999994Q41.2 41.3 38.05 39.55Q34.9 37.8 30.0 37.8Q19.8 37.8 16.25 45.4Q12.700000000000001 53.0 12.700000000000001 66.6Q12.700000000000001 80.1 16.200000000000003 87.75Q19.700000000000003 95.4 29.8 95.4Q33.9 95.4 37.3 94.15Q40.7 92.9 42.1 91.7V74.2Q38.0 72.5 31.900000000000002 72.1L32.300000000000004 68.4L51.0 67.5V95.8Q46.900000000000006 98.1 41.10000000000001 99.4Q35.300000000000004 100.7 29.8 100.7Q15.100000000000001 100.7 8.850000000000001 91.95Q2.6 83.2 2.6 66.6Z M56.900000000000006 89.3Q56.900000000000006 82.8 61.7 79.05Q66.5 75.3 75.60000000000001 74.7L83.80000000000001 74.1V66.0Q83.80000000000001 61.0 81.70000000000002 58.7Q79.60000000000001 56.4 74.9 56.4Q70.9 56.4 68.75 57.599999999999994Q66.60000000000001 58.8 66.60000000000001 60.9Q66.60000000000001 63.5 69.60000000000001 64.6Q69.60000000000001 66.9 68.15 68.15Q66.7 69.4 63.900000000000006 69.4Q61.300000000000004 69.4 59.7 67.8Q58.1 66.19999999999999 58.1 63.6Q58.1 58.5 62.650000000000006 55.45Q67.2 52.4 74.9 52.4Q83.10000000000001 52.4 87.70000000000002 56.0Q92.30000000000001 59.599999999999994 92.30000000000001 66.0V93.9Q93.20000000000002 94.6 95.20000000000002 95.4Q97.20000000000002 96.2 99.30000000000001 96.6L98.9 100.0H85.10000000000001L84.10000000000001 95.5Q81.0 98.4 77.6 99.55000000000001Q74.2 100.7 69.9 100.7Q63.7 100.7 60.300000000000004 97.7Q56.900000000000006 94.7 56.900000000000006 89.3ZM83.80000000000001 90.8V78.2L75.80000000000001 78.9Q71.10000000000001 79.3 68.4 81.85Q65.7 84.4 65.7 88.4Q65.7 96.6 72.4 96.6Q75.2 96.6 77.9 95.25Q80.60000000000001 93.9 83.80000000000001 90.8Z M111.7 93.9V65.1Q111.7 61.4 110.15 60.05Q108.60000000000001 58.699999999999996 104.7 58.5L105.0 55.599999999999994Q109.0 54.9 113.25 53.599999999999994Q117.5 52.3 118.2 52.099999999999994L120.2 53.199999999999996V93.9Q122.7 95.7 127.2 96.6L126.80000000000001 100.0H104.7L105.10000000000001 96.4Q107.4 96.0 108.80000000000001 95.5Q110.2 95.0 111.7 93.9ZM109.60000000000001 38.9Q109.60000000000001 33.099999999999994 114.80000000000001 33.099999999999994Q117.4 33.099999999999994 118.75 34.599999999999994Q120.10000000000001 36.099999999999994 120.10000000000001 38.9Q120.10000000000001 41.699999999999996 118.75 43.199999999999996Q117.4 44.699999999999996 114.80000000000001 44.699999999999996Q109.60000000000001 44.699999999999996 109.60000000000001 38.9Z M139.8 93.8V65.3Q139.8 61.599999999999994 138.25 60.25Q136.70000000000002 58.9 132.8 58.699999999999996L133.10000000000002 55.8Q136.20000000000002 55.199999999999996 142.0 53.4L145.3 52.4L147.10000000000002 53.3L148.0 59.5Q150.3 56.199999999999996 153.85000000000002 54.3Q157.4 52.4 161.20000000000002 52.4Q168.5 52.4 172.55 56.05Q176.60000000000002 59.699999999999996 176.60000000000002 66.19999999999999V93.8Q177.5 94.6 179.5 95.4Q181.5 96.2 183.60000000000002 96.6L183.20000000000002 100.0H161.20000000000002L161.5 96.6Q165.3 96.0 168.10000000000002 93.8V67.1Q168.10000000000002 57.199999999999996 159.5 57.199999999999996Q156.10000000000002 57.199999999999996 153.0 59.55Q149.9 61.9 148.3 65.6V93.8Q150.70000000000002 95.7 155.3 96.6L154.9 100.0H132.8L133.20000000000002 96.4Q135.5 96.0 136.95 95.45Q138.4 94.9 139.8 93.8Z" fill="#FFFFFF"/><path d="M195.1 92.9V40.4Q193.2 38.599999999999994 189.0 37.199999999999996L189.4 33.3H217.6Q243.2 33.3 243.2 50.9Q243.2 57.3 239.89999999999998 61.6Q236.6 65.9 230.2 68.0Q233.4 70.2 235.4 74.6L242.9 92.4Q243.5 93.8 245.05 94.55Q246.6 95.3 249.0 95.9L248.3 100.0H230.1L220.4 73.9Q219.0 70.1 214.3 70.0L209.8 69.8V92.9Q211.9 95.0 217.3 96.1L216.6 100.0H189.0L189.4 95.9Q191.3 95.5 192.55 94.85Q193.8 94.2 195.1 92.9ZM227.7 51.099999999999994Q227.7 45.5 224.7 42.45Q221.7 39.4 216.3 39.4Q212.3 39.4 209.8 39.8V63.699999999999996H216.3Q227.7 63.699999999999996 227.7 51.099999999999994Z M252.6 88.2Q252.6 81.7 257.6 77.95Q262.6 74.2 272.3 73.5L281.1 72.9V67.1Q281.1 60.099999999999994 279.45000000000005 57.39999999999999Q277.8 54.699999999999996 273.7 54.699999999999996Q270.9 54.699999999999996 269.04999999999995 56.14999999999999Q267.2 57.599999999999994 267.2 59.8Q267.2 62.3 269.4 64.0Q268.9 66.5 267.0 68.0Q265.1 69.5 262.4 69.5Q259.1 69.5 256.90000000000003 67.4Q254.70000000000002 65.3 254.70000000000002 62.199999999999996Q254.70000000000002 56.9 259.75 53.849999999999994Q264.8 50.8 273.7 50.8Q284.3 50.8 289.75 54.8Q295.2 58.8 295.2 66.6V93.8Q295.9 94.6 297.6 95.35Q299.3 96.1 301.2 96.5L300.8 100.0H282.8L281.8 94.3Q278.5 97.6 274.9 99.15Q271.3 100.7 266.9 100.7Q260.0 100.7 256.3 97.5Q252.6 94.3 252.6 88.2ZM281.1 88.7V77.8L276.1 78.2Q270.6 78.6 268.20000000000005 80.69999999999999Q265.8 82.8 265.8 87.1Q265.8 90.5 267.35 92.35Q268.9 94.2 271.8 94.2Q276.4 94.2 281.1 88.7Z M311.3 88.7V58.699999999999996H304.2V54.099999999999994Q309.1 52.199999999999996 312.95000000000005 49.05Q316.8 45.9 319.1 41.599999999999994H325.6V52.199999999999996H338.40000000000003V58.699999999999996H325.5V87.9Q325.5 90.7 326.8 91.95Q328.1 93.2 330.3 93.2Q332.0 93.2 333.95000000000005 92.5Q335.90000000000003 91.8 337.5 90.7L339.5 94.2Q336.40000000000003 97.0 332.05 98.7Q327.7 100.4 323.5 100.4Q318.1 100.4 314.70000000000005 97.5Q311.3 94.6 311.3 88.7Z M349.09999999999997 93.4V64.6Q349.09999999999997 61.0 347.75 59.65Q346.4 58.3 342.9 58.099999999999994L343.2 54.199999999999996Q344.7 53.9 348.59999999999997 53.3Q359.3 51.5 361.5 50.8L363.2 51.699999999999996V93.4Q365.7 95.3 369.59999999999997 96.1L369.2 100.0H343.5L343.9 95.9Q345.8 95.5 346.85 95.0Q347.9 94.5 349.09999999999997 93.4ZM347.2 37.8Q347.2 30.799999999999997 355.2 30.799999999999997Q359.09999999999997 30.799999999999997 361.09999999999997 32.599999999999994Q363.09999999999997 34.39999999999999 363.09999999999997 37.8Q363.09999999999997 41.199999999999996 361.09999999999997 43.0Q359.09999999999997 44.8 355.2 44.8Q351.2 44.8 349.2 43.0Q347.2 41.199999999999996 347.2 37.8Z M373.9 75.9Q373.9 63.6 379.95 57.2Q386.0 50.8 397.9 50.8Q409.79999999999995 50.8 415.84999999999997 57.2Q421.9 63.6 421.9 75.8Q421.9 88.0 415.84999999999997 94.35Q409.79999999999995 100.7 397.9 100.7Q386.0 100.7 379.95 94.4Q373.9 88.1 373.9 75.9ZM407.2 75.8Q407.2 65.6 405.0 61.0Q402.79999999999995 56.4 397.9 56.4Q393.0 56.4 390.79999999999995 61.0Q388.59999999999997 65.6 388.59999999999997 75.8Q388.59999999999997 86.0 390.79999999999995 90.55Q393.0 95.1 397.9 95.1Q402.79999999999995 95.1 405.0 90.55Q407.2 86.0 407.2 75.8Z" fill="#FFFFFF"/>
+  </g>
+    </svg>
+    <h1>I help enterprises move from AI experiments to production platforms — without vendor lock-in, uncontrolled agents, or architecture chaos.</h1>
+    <p class="sub">Independent AI Platform Advisor &nbsp;·&nbsp; Architecture → Reference Implementation → Golden Path</p>
+    <p class="depth">AI gateways · agent runtimes · governance · evaluation · developer platforms · deterministic execution · local-first AI</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="/cdn-cgi/l/email-protection#f890998a918b90b89f9991968a998c9197d69b9795c78b8d9a929d9b8cc5b9b1ddcac88894998c9e978a95ddcac8998a9b90918c9d9b8c8d8a9d">Start with a 2&ndash;3 week Platform Diagnostic</a>
+      <a class="btn btn-ghost" href="#sprint">See how the engagement works</a>
+      <a class="btn btn-ghost" href="https://open-source.gainratio.com/">Open source</a>
+    </div>
+    <div class="rule-thin"></div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section id="problem">
+    <div class="wrap">
+      <h2>The problem I am called in for</h2>
+      <p class="lead">Eighteen months into GenAI, most enterprises have five gateways, three orchestration approaches, no evaluation standard, and no coherent path for the next team that wants to ship.</p>
+      <p>Every individual decision was defensible. The aggregate is not a platform, and some of what has already been built is about to become irreversible.</p>
+      <p>That is an architecture problem, and it has a short, bounded solution. It does not require a three-year systems integrator engagement, and it does not get fixed by adding another vendor.</p>
+    </div>
+  </section>
+
+  <section id="sprint">
+    <div class="wrap">
+      <h2>The Enterprise AI Platform Architecture Sprint</h2>
+      <p class="lead">Six to ten weeks. One architect. A defined end.</p>
+      <ul>
+        <li>Map the existing system as it actually is, not as the diagrams say.</li>
+        <li>Identify the decisions that are about to become <strong>irreversible</strong> — and separate them from the ones that can wait.</li>
+        <li>Define the target platform: gateway and routing, agent runtime, evaluation, governance and security boundaries.</li>
+        <li>Establish the <strong>interfaces and contracts</strong> that let teams move without coordinating on every change.</li>
+        <li>Build a skeletal reference implementation and one production-quality vertical slice — working code, not slideware.</li>
+        <li>Encode the result as a <strong>golden path</strong> in your developer tooling, so the fiftieth team ships the way the first one did.</li>
+        <li>Transfer it to your engineers. Then leave.</li>
+      </ul>
+      <p>Your team owns the architecture, the decision records, and the running code. There is no dependency on me afterwards, and no three-year backlog to maintain. That is the point of the engagement shape, not a limitation of it.</p>
+
+      <h3 class="sub-h">What done looks like</h3>
+      <ul class="done">
+        <li>A canonical gateway and agent-runtime strategy, with deliberate exceptions and migration paths off the redundant platforms.</li>
+        <li>A production vertical slice running under the target architecture — not a prototype.</li>
+        <li>A golden path in your own tooling: the opinionated, executable default that makes the correct way the easy way for the fiftieth team.</li>
+        <li>Every irreversible decision documented, dated, and either taken deliberately or explicitly deferred.</li>
+        <li>Your engineers able to extend it without me. That is the acceptance test.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="engagements">
+    <div class="wrap">
+      <h2>How to engage</h2>
+
+      <div class="offer">
+        <div class="offer-head">
+          <h3>Platform Diagnostic</h3>
+          <span class="dur">2–3 weeks</span>
+        </div>
+        <p>Current state, irreversible decisions, target architecture, prioritised roadmap. Fixed fee. The entry point: it stands alone, and it is how both sides find out whether the larger engagement is worth doing.</p>
+      </div>
+
+      <div class="offer">
+        <div class="offer-head">
+          <h3>Architecture &amp; Reference Implementation</h3>
+          <span class="dur">6–10 weeks</span>
+        </div>
+        <p>The full sprint above. Fixed fee by scope. Ends with architecture, standards, a reference implementation and a golden path your teams own.</p>
+      </div>
+
+      <div class="offer">
+        <div class="offer-head">
+          <h3>Fractional Principal AI Platform Architect</h3>
+          <span class="dur">1–2 days / week</span>
+        </div>
+        <p>Standing design authority. Monthly retainer, three-month minimum. Design review, decision-record sign-off, vendor selection, and mentoring for your staff and principal engineers.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="scope">
+    <div class="wrap">
+      <h2>What I do not take</h2>
+      <p>Staff augmentation, production support rotations, long-run backlog ownership, generic cloud migration, and people-management roles. The practice is deliberately narrow: three offers, repeatable, priced as outcomes. I am a hands-on architect, and I write the reference implementation myself.</p>
+    </div>
+  </section>
+
+  <section id="proof">
+    <div class="wrap">
+      <h2>Why this practice, and not a slide deck</h2>
+      <ul>
+        <li><strong>Fortune 500 scale, in production.</strong> Created a Fortune 500 specialty retailer's enterprise operating model for AI delivery — approved at CTO level — and put a vendor-neutral enterprise AI gateway with policy enforcement into production behind it.</li>
+        <li><strong>Architecture across large delivery organizations.</strong> Led architecture across 22 squads and 100+ developers for a sovereign-cloud platform at Nike; guided a 16-person team at DTEK.ai through a computer-vision platform at 99% accuracy and 15&nbsp;ms latency.</li>
+        <li><strong>Public, runnable proof.</strong> An open-source portfolio built independently of any employer and generalised from recurring classes of problem, never from client implementations — see below.</li>
+        <li><strong>Thirty years, still hands-on.</strong> Two U.S. patents. Enterprise architecture across retail, financial services, and consumer platforms.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="oss">
+    <div class="wrap">
+      <h2>I build the thing, not a deck about the thing</h2>
+      <p>One thesis runs through all of it: the parts of a system that must be trusted should be deterministic, signed, and verifiable offline — with the probabilistic parts bounded inside them. These are open source, independent of any employer, and they run.</p>
+      <ul class="oss">
+        <li>
+          <h3>AML-Filter</h3>
+          <p>Screens a name against 31,566 sanctioned entities — OFAC SDN, EU, UN and UK OFSI — entirely inside the browser tab. Signed watchlist bundles; nothing leaves the machine.</p>
+          <p class="links"><a href="https://aml-filter.com" target="_blank" rel="noopener">Live demo</a> &nbsp;·&nbsp; <a href="https://github.com/gainratio/aml-filter" target="_blank" rel="noopener">Source</a></p>
+        </li>
+        <li>
+          <h3>EdgeReco</h3>
+          <p>Product search and recommendations that run on the shopper's device. A 720-product catalog ships as a 1.5&nbsp;MB signed, content-addressed bundle.</p>
+          <p class="links"><a href="https://edge-reco.com" target="_blank" rel="noopener">Live demo</a> &nbsp;·&nbsp; <a href="https://github.com/gainratio/edge-reco" target="_blank" rel="noopener">Source</a></p>
+        </li>
+        <li>
+          <h3>EdgeProc</h3>
+          <p>Ships a search index to a device as signed, content-addressed bundles: fail-closed Ed25519 verification and FastCDC chunking, so the next release downloads only the chunks that changed. 309 tests, 98% coverage.</p>
+          <p class="links"><a href="https://github.com/gainratio/edge-proc" target="_blank" rel="noopener">Source</a></p>
+        </li>
+      </ul>
+      <p class="links">Also public: <a href="https://github.com/gainratio/assay" target="_blank" rel="noopener">Assay / Avow</a> — sign a decision record with Ed25519 over RFC&nbsp;8785 canonical JSON, then verify it offline years later &nbsp;·&nbsp; <a href="https://github.com/gainratio/privacy-core" target="_blank" rel="noopener">privacy-core</a> — redact PII in the browser before a prompt ever leaves the machine, then rehydrate the reply locally. Everything at <a href="https://github.com/gainratio" target="_blank" rel="noopener">github.com/gainratio</a>.</p>
+    </div>
+  </section>
+
+  <section id="pov">
+    <div class="wrap">
+      <h2>The point of view you are buying</h2>
+
+      <div class="pov">
+        <h3>Deterministic before probabilistic</h3>
+        <p>A model is a component, not an architecture. The parts of a system that must be auditable — authorization, contracts, release gates, money, compliance — should be deterministic and verifiable, with the probabilistic parts bounded inside them. Most enterprise AI risk comes from inverting that.</p>
+      </div>
+
+      <div class="pov">
+        <h3>Platforms before applications</h3>
+        <p>The first AI application is an engineering problem. The fiftieth is a platform problem, and organizations discover this roughly two years and several rewrites late.</p>
+      </div>
+
+      <div class="pov">
+        <h3>Architecture as tooling</h3>
+        <p>A standard nobody can execute is a document. A standard compiled into golden paths, templates, and CI gates is a standard. I judge my own work by whether your engineers can ship correctly without having read anything I wrote.</p>
+      </div>
+      <div class="pov">
+        <h3>Evaluation is a release gate, not a dashboard</h3>
+        <p>Monitoring tells you what an agent did after it affected a customer. That is observability, not control. The question a platform has to answer is what an agent <em>will</em> do &mdash; exercised against real and synthetic workflows, adversarial inputs, and explicit policy boundaries, before release. Evaluation belongs in CI and in the golden path, on the same gate every other change passes through. The deterministic layer is what makes the gate enforceable: you can assert on authorization, contracts and side effects even where you cannot assert on prose.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="partners">
+    <div class="wrap">
+      <h2>For intermediaries and partners</h2>
+      <div class="note">
+        <p><strong>GainRatio provides fractional Principal-level AI Platform Architecture: we help enterprises turn fragmented GenAI experiments into governed production platforms, then leave behind the architecture, skeletal implementation and golden path for their teams to own.</strong></p>
+        <p>Gain Ratio, Inc. contracts as the supplying entity, corp-to-corp. A commission or markup is expected and welcome — an intermediary who originates and manages the account earns it. Engagements are fixed-scope and time-bounded by design; that is what makes them sellable to a CTO with a budget and a board date.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="close" class="close">
+    <div class="wrap">
+      <blockquote>Before you spend another year scaling the wrong architecture, spend a few weeks establishing the right one.</blockquote>
+      <p>You will be talking to the architect who does the work. There is no bench, no account team, and no discovery phase that bills for six weeks before anything is designed.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="/cdn-cgi/l/email-protection#b1d9d0c3d8c2d9f1d6d0d8dfc3d0c5d8de9fd2dedc8ec2c4d3dbd4d2c58cf0f8948381c1ddd0c5d7dec3dc948381d0c3d2d9d8c5d4d2c5c4c3d4">Start with the Platform Diagnostic — fixed fee, 2–3 weeks</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <h2>Contact</h2>
+      <p class="lead">Harish Seshadri — Founder &amp; Principal Architect</p>
+      <ul class="contact-grid">
+        <li><a href="/cdn-cgi/l/email-protection#fd959c8f948e95bd9a9c94938f9c899492d39e9290"><span class="__cf_email__" data-cfemail="8ae2ebf8e3f9e2caedebe3e4f8ebfee3e5a4e9e5e7">[email&#160;protected]</span></a></li>
+        <li><a href="https://www.linkedin.com/in/harish-seshadri-2373142b/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://github.com/gainratio" target="_blank" rel="noopener">GitHub</a></li>
+        <li>San Francisco Bay Area</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© <span id="y">2026</span> Gain Ratio, Inc. — independent AI platform advisory. San Francisco Bay Area. &nbsp;·&nbsp; <a href="https://open-source.gainratio.com/">Open source</a></p>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4864484a975e678',t:'MTc5MTY0MjA0Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4865c3e3ec167c1',t:'MTc5MTY0MzAxNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a502045f1d271949',t:'MTc5MjkzOTY1Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

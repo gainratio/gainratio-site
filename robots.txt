@@ -1,0 +1,5 @@
+# Nothing here is private. This file exists only to point crawlers at the sitemap.
+User-agent: *
+Allow: /
+
+Sitemap: https://gainratio.com/sitemap.xml
